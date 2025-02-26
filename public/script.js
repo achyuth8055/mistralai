@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         userInput.value = "";
         userInput.focus();
 
-        let botMessage = displayMessage("...", "bot-message", true);
+        let botMessage = displayMessage("please wait i'm thinking.!", "bot-message", true);
         let fullResponse = "";
 
         if (eventSource) {

@@ -1,36 +1,58 @@
-/* 🔹 GENERAL STYLES */
+/* General Styles */
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #242323;
-    color: white;
+    font-family: 'Roboto', sans-serif;
+    background-color: #202124; /* Dark background */
+    color: #e8eaeb; /* Light text */
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    margin: 0;
 }
 
-/* 🔹 NAVBAR */
+/* Navbar */
 .navbar {
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    background-color: #28292c;
+    padding: 10px 20px;
 }
 
-/* 🔹 SIDEBAR */
+.navbar-brand {
+    font-weight: 500;
+    
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url("https://e7.pngegg.com/pngimages/630/473/png-clipart-computer-icons-symbol-toggle-button-text-electrical-wires-cable.png"); /* Replace with your icon if needed */
+}
+
+/* Chat Container */
+.chat-container {
+    display: flex;
+    flex-grow: 1; /* Key: Allow container to grow */
+    overflow: hidden; /* Keep this for horizontal overflow */
+    height: 100vh; /* Takes full viewport height */
+}
+
+/* Sidebar */
 .sidebar {
-    width: 250px;
-    height: 100vh;
-    position: fixed;
-    left: -260px;
-    top: 0;
-    background: #1e1e1e;
+    background-color: #28292c;
     padding: 20px;
-    transition: left 0.3s ease-in-out;
+    height: 100%; /* Occupy full height of chat container */
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%); /* Hidden by default on smaller screens */
+    transition: transform 0.3s ease;
+    z-index: 1050; /* Ensure it's above other content */
+    overflow-y: auto;
 }
 
 .sidebar.show {
-    left: 0;
+    transform: translateX(0); /* Shown when toggled */
 }
 
 #close-sidebar {
@@ -38,105 +60,239 @@ body {
     width: 100%;
 }
 
-/* 🔹 CHAT CONTAINER */
-.chat-container {
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li a {
+    display: block;
+    color: #e8eaeb;
+    text-decoration: none;
+    padding: 10px 0;
+}
+
+.sidebar li a:hover {
+    color: #fff;
+}
+
+/* Chat Area */
+.chat-area {
+    flex-grow: 1; /* Allow chat area to expand */
     display: flex;
-    background-color: #1c1c1c;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: calc(100vh - 56px);
-    padding: 15px;
+    padding: 20px;
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+    overflow-y: auto;
+    background-color: #202124; /* Match background color */
 }
 
-/* 🔹 CHAT BOX */
+@media (min-width: 768px) {
+    .chat-area {
+        margin-left: 250px; /* Push content to the right when sidebar is visible */
+    }
+}
+
+/* Chat Box */
 .chat-box {
-    width: 50%;
-    max-width: 800px;
-    height: 70vh;
-    overflow-y: auto;
-    background: #1c1c1c;
+    flex-grow: 1; /* Key: Allow chat box to take up available space */
+    background-color: #28292c; /* Match sidebar color */
+    border-radius: 8px;
     padding: 20px;
-    border-radius: 10px;
+    width: 80%;
+    max-width: 900px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    max-height: 70vh; /* Keep this for a maximum height */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 🔹 CHAT MESSAGES */
+.initial-message {
+    text-align: center;
+    color: #e8eaeb;
+    margin-bottom: 20px;
+}
+
+.topic-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.topic-card {
+    background-color: #424347;
+    color: #e8eaeb;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.topic-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Message Styles */
 .message {
     max-width: 80%;
     padding: 12px 16px;
-    border-radius: 10px;
-    margin: 8px auto;
+    border-radius: 16px;
+    margin-bottom: 10px;
     word-wrap: break-word;
     font-size: 16px;
     position: relative;
+    background-color: #35363a; /* Slightly lighter than chat box */
+    color: #e8eaeb;
 }
 
 .user-message {
-    background-color: #a6c0dc;
-    color: white;
     align-self: flex-end;
+    background-color: #424347; /* Slightly darker for user messages */
 }
 
 .bot-message {
-    background-color: #333;
-    color: white;
     align-self: flex-start;
-    display: flex;
-    justify-content: space-between;
 }
 
-/* 🔹 COPY BUTTON */
+/* Code Block Styles (Terminal Look) */
+pre {
+    background-color: #282c34; /* Darker background */
+    color: #abb2bf; /* Lighter text */
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto; /* Horizontal scroll if needed */
+    font-family: 'Consolas', 'Courier New', monospace; /* Monospace font */
+    white-space: pre-wrap; /* Allow wrapping of long lines */
+    position: relative; /* For copy button positioning */
+    margin: 10px 0; /* Add margin to separate code blocks */
+}
+
+code {  /* Or even more specific:  .chat-box code */
+    background-color: #343436; /* Example: Slightly lighter than chat box */
+    color: #e8eaeb; /* Light text */
+    padding: 2px 4px; /* Adjust padding as needed */
+    border-radius: 3px; /* Add a small border radius */
+    font-family: 'Consolas', 'Courier New', monospace; /* Monospace font */
+    font-size: medium;
+    /* Add any other styles you want for inline code */
+}
+
 .copy-button {
-    position: relative;
-    margin-left: 10px;
-    background: transparent;
-    color: white;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
     border: none;
+    color: #61afef; /* Blue color */
     cursor: pointer;
-    font-size: 14px;
+    opacity: 0.7;
+    transition: opacity 0.3s;
 }
 
 .copy-button:hover {
-    color: #ddd;
+    opacity: 1;
 }
 
-/* 🔹 INPUT AREA */
+/* Input Area */
 .input-area {
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 50%;
-    max-width: 800px;
-    background-color: #222;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 15px;
+    background-color: #35363a;
+    border-radius: 8px;
+    padding: 10px;
+    width: 80%;
+    max-width: 900px;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1051;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
 }
 
-textarea#user-input {
-    flex: 1;
+#user-input {
+    flex-grow: 1;
+    background-color: #424347;
+    color: #e8eaeb;
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    resize: none;
+    overflow: hidden;
     min-height: 40px;
     max-height: 120px;
-    overflow-y: auto;
-    resize: none;
-    background-color: #333;
-    color: white;
-    border: 1px solid #555;
-    padding: 10px;
-    border-radius: 5px;
-    width: 100%;
 }
 
-/* 🔹 MOBILE RESPONSIVENESS */
+#user-input::placeholder {
+    color: #757575;
+}
+
+#send-button {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    margin-left: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+#send-button:hover {
+    background-color: #357ae8;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
     .chat-box {
-        width: 90%;
-        height: 65vh;
+        width: 100%; /* Full width on smaller screens */
+        max-height: 80vh; /* Adjust max height if needed */
     }
 
     .input-area {
-        width: 90%;
+        width: 100%; /* Full width on smaller screens */
+        bottom: 10px; /* Adjust bottom margin if needed */
+    }
+
+    .sidebar {
+        width: 80%; /* Occupy most of the screen */
+        transform: translateX(-100%); /* Start offscreen */
+    }
+
+    .chat-area {
+        margin-left: 0; /* Reset margin */
+    }
+
+    /* Show the sidebar toggle button if it's hidden */
+    .navbar-toggler {
+        display: block; /* Or whatever your toggle button display property should be */
+    }
+}
+
+
+/* Styles for better mobile experience (optional) */
+@media (max-width: 576px) {
+    .message {
+        font-size: 14px; /* Slightly smaller font */
+    }
+
+    .copy-button {
+        font-size: 12px; /* Smaller copy button */
+    }
+
+    #user-input {
+        font-size: 14px; /* Smaller input font */
+    }
+
+    #send-button {
+        font-size: 14px; /* Smaller send button font */
+        padding: 8px 14px; /* Adjust padding */
     }
 }
