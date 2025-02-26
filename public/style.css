@@ -1,0 +1,142 @@
+/* 🔹 GENERAL STYLES */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #242323;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 🔹 NAVBAR */
+.navbar {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 🔹 SIDEBAR */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: -260px;
+    top: 0;
+    background: #1e1e1e;
+    padding: 20px;
+    transition: left 0.3s ease-in-out;
+}
+
+.sidebar.show {
+    left: 0;
+}
+
+#close-sidebar {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* 🔹 CHAT CONTAINER */
+.chat-container {
+    display: flex;
+    background-color: #1c1c1c;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 56px);
+    padding: 15px;
+}
+
+/* 🔹 CHAT BOX */
+.chat-box {
+    width: 50%;
+    max-width: 800px;
+    height: 70vh;
+    overflow-y: auto;
+    background: #1c1c1c;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 🔹 CHAT MESSAGES */
+.message {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin: 8px auto;
+    word-wrap: break-word;
+    font-size: 16px;
+    position: relative;
+}
+
+.user-message {
+    background-color: #a6c0dc;
+    color: white;
+    align-self: flex-end;
+}
+
+.bot-message {
+    background-color: #333;
+    color: white;
+    align-self: flex-start;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 🔹 COPY BUTTON */
+.copy-button {
+    position: relative;
+    margin-left: 10px;
+    background: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.copy-button:hover {
+    color: #ddd;
+}
+
+/* 🔹 INPUT AREA */
+.input-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    max-width: 800px;
+    background-color: #222;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+textarea#user-input {
+    flex: 1;
+    min-height: 40px;
+    max-height: 120px;
+    overflow-y: auto;
+    resize: none;
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+/* 🔹 MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+    .chat-box {
+        width: 90%;
+        height: 65vh;
+    }
+
+    .input-area {
+        width: 90%;
+    }
+}
