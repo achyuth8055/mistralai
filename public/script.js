@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let botMessage = displayMessage("...", "bot-message", true);
         let fullResponse = "";
 
-        // Close previous event source if open
         if (eventSource) {
             eventSource.close();
         }
@@ -29,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     eventSource.close();
                     eventSource = null;
 
-                    // Add copy buttons to code blocks
                     const codeBlocks = botMessage.querySelectorAll('pre code');
                     codeBlocks.forEach(codeBlock => {
                         const copyButton = document.createElement("button");
@@ -37,11 +35,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         copyButton.classList.add("copy-button");
                         copyButton.onclick = () => copyToClipboard(codeBlock.textContent, copyButton);
                         codeBlock.parentElement.appendChild(copyButton);
-                    });
 
-                    // Apply syntax highlighting
-                    document.querySelectorAll('pre code').forEach((block) => {
-                        hljs.highlightBlock(block);
+                        // Apply syntax highlighting (if hljs is included)
+                        if (typeof hljs !== 'undefined') { // Check if hljs is defined before calling it.
+                            hljs.highlightBlock(codeBlock);
+                        }
                     });
                 } else {
                     const responseData = JSON.parse(event.data);
@@ -93,17 +91,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     inCodeBlock = true;
                 }
             } else if (inCodeBlock) {
-                // Only include code and code-related comments inside <code>
                 output += `${escapeHtml(line)}\n`;
             } else {
-                // Render non-code text outside <code> with proper line breaks
-                output += `<p>${formatText(line)}</p>`;
+                output += `${formatText(line)}<br>`; // <br> after each line
             }
         }
 
-        // Handle incomplete code blocks
         if (inCodeBlock) {
-            output += "</code></pre>";
+            output += "</code></pre>";  // Close any unclosed code blocks
         }
 
         return output;
@@ -129,13 +124,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function formatText(text) {
-        text = text.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>"); // Bold
-        text = text.replace(/\*(.+?)\*/g, "<i>$1</i>"); // Italic
-        text = text.replace(/^# (.+)$/gm, "<h2>$1</h2>"); // Heading 2
-        text = text.replace(/^## (.+)$/gm, "<h3>$1</h3>"); // Heading 3
-        text = text.replace(/^### (.+)$/gm, "<h4>$1</h4>"); // Heading 4
-        text = text.replace(/\n/g, "<br>"); // Line breaks
-        return text;
+        text = text.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+        text = text.replace(/\*(.+?)\*/g, "<i>$1</i>");
+        text = text.replace(/^# (.+)$/gm, "<h2>$1</h2>");
+        text = text.replace(/^## (.+)$/gm, "<h3>$1</h3>");
+        text = text.replace(/^### (.+)$/gm, "<h4>$1</h4>");
+        return text; // No <br> tags here!
     }
 
     function copyToClipboard(text, button) {
